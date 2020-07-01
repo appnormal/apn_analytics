@@ -2,7 +2,6 @@ library apn_analytics;
 
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/widgets.dart';
-import 'package:get_it/get_it.dart';
 
 abstract class IAnalyticsService {
   void trackScreen(String screenName);
@@ -15,7 +14,10 @@ abstract class IAnalyticsService {
 }
 
 class AnalyticsService extends IAnalyticsService {
-  static IAnalyticsService get instance => GetIt.I<IAnalyticsService>();
+  AnalyticsService._();
+
+  static final AnalyticsService instance = AnalyticsService._();
+
   final analytics = FirebaseAnalytics();
 
   @override

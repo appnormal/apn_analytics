@@ -10,7 +10,6 @@ dependencies:
   flutter:
     sdk: flutter
   firebase_analytics: ^5.0.15
-  get_it: ^4.0.2
 
 dev_dependencies:
   flutter_test:
