@@ -1,7 +1,7 @@
 name: apn_analytics
 description: A new Appnormal flutter package that wraps firebase analytics.
 version: 1.0.0
-homepage:
+homepage: https://github.com/appnormal/apn_analytics
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
