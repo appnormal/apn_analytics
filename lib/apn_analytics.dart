@@ -66,7 +66,7 @@ class AnalyticsRouteObserver extends RouteObserver {
   @override
   void didPush(Route route, Route previousRoute) {
     // Dialogs are also pushed, but have no name
-    if (route.settings.name != null) {
+    if (route?.settings?.name != null) {
       FirebaseAnalyticsService.instance.trackScreen(route.settings.name);
     }
     super.didPush(route, previousRoute);
@@ -75,7 +75,7 @@ class AnalyticsRouteObserver extends RouteObserver {
   @override
   void didPop(Route route, Route previousRoute) {
     // Dialogs are also popped, but have no name
-    if (route.settings.name != null && previousRoute.settings.name != null) {
+    if (route?.settings?.name != null && previousRoute?.settings?.name != null) {
       FirebaseAnalyticsService.instance.trackScreen(previousRoute.settings.name);
     }
     super.didPop(route, previousRoute);
