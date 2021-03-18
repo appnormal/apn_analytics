@@ -1,7 +1,9 @@
 library apn_analytics;
 
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/widgets.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:get_it/get_it.dart';
 
 abstract class IAnalyticsService {
@@ -11,11 +13,10 @@ abstract class IAnalyticsService {
 
   void trackEventWithParams(String eventName, Map<String, dynamic> params);
 
-  void trackButton(String category, String label) => trackEvent(category ?? 'UI', 'Button', label);
+  void trackButton(String? category, String label) => trackEvent(category ?? 'UI', 'Button', label);
 }
 
 class FirebaseAnalyticsService extends IAnalyticsService {
-  //TODO: find a way around 'static members are not inherited'
   static IAnalyticsService get instance => GetIt.I<IAnalyticsService>();
 
   final analytics = FirebaseAnalytics();
@@ -64,19 +65,19 @@ class NoopAnalytics extends IAnalyticsService {
 
 class AnalyticsRouteObserver extends RouteObserver {
   @override
-  void didPush(Route route, Route previousRoute) {
+  void didPush(Route route, Route? previousRoute) {
     // Dialogs are also pushed, but have no name
-    if (route?.settings?.name != null) {
-      FirebaseAnalyticsService.instance.trackScreen(route.settings.name);
+    if (route.settings.name != null) {
+      FirebaseAnalyticsService.instance.trackScreen(route.settings.name!);
     }
     super.didPush(route, previousRoute);
   }
 
   @override
-  void didPop(Route route, Route previousRoute) {
+  void didPop(Route route, Route? previousRoute) {
     // Dialogs are also popped, but have no name
-    if (route?.settings?.name != null && previousRoute?.settings?.name != null) {
-      FirebaseAnalyticsService.instance.trackScreen(previousRoute.settings.name);
+    if (route.settings.name != null && previousRoute?.settings.name != null) {
+      FirebaseAnalyticsService.instance.trackScreen(previousRoute!.settings.name!);
     }
     super.didPop(route, previousRoute);
   }
