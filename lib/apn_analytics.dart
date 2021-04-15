@@ -3,8 +3,6 @@ library apn_analytics;
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/widgets.dart';
-// ignore: import_of_legacy_library_into_null_safe
-import 'package:get_it/get_it.dart';
 
 abstract class IAnalyticsService {
   void trackScreen(String screenName);
@@ -17,8 +15,6 @@ abstract class IAnalyticsService {
 }
 
 class FirebaseAnalyticsService extends IAnalyticsService {
-  static IAnalyticsService get instance => GetIt.I<IAnalyticsService>();
-
   final analytics = FirebaseAnalytics();
 
   @override
@@ -64,11 +60,14 @@ class NoopAnalytics extends IAnalyticsService {
 }
 
 class AnalyticsRouteObserver extends RouteObserver {
+  final IAnalyticsService analytics;
+
+  AnalyticsRouteObserver(this.analytics);
   @override
   void didPush(Route route, Route? previousRoute) {
     // Dialogs are also pushed, but have no name
     if (route.settings.name != null) {
-      FirebaseAnalyticsService.instance.trackScreen(route.settings.name!);
+      analytics.trackScreen(route.settings.name!);
     }
     super.didPush(route, previousRoute);
   }
@@ -77,7 +76,7 @@ class AnalyticsRouteObserver extends RouteObserver {
   void didPop(Route route, Route? previousRoute) {
     // Dialogs are also popped, but have no name
     if (route.settings.name != null && previousRoute?.settings.name != null) {
-      FirebaseAnalyticsService.instance.trackScreen(previousRoute!.settings.name!);
+      analytics.trackScreen(previousRoute!.settings.name!);
     }
     super.didPop(route, previousRoute);
   }
